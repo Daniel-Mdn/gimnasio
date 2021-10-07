@@ -1,0 +1,73 @@
+{%extends "layout.html"%}
+
+  {%block head%}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  {%endblock%}
+  {%block body%}
+    <div class="modal fade" id="modal-modify-rutina" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modificar Rutina</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="/home/administracion_rutinas/modify_rutina" method="POST">
+            <div class="modal-body">
+              <label class="form-label">Seleccione una rutina: </label>
+              <div class="list-group" id="list-tab" role="tablist" style="max-height: 200px; overflow-y: scroll;">
+                <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Home</a>
+                <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Profile</a>
+                <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Messages</a>
+                <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+              </div>
+              <div class="tab-content" id="nav-tabContent" style="margin-top: 20px;">
+                <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list"><input type="text" class="form-control"  disabled value="dasdasd"></div>
+                <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list"><input type="text" class="form-control"  disabled value="qsdtqtthyruj"></div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary"> Modificar rutina </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row" style="margin-bottom: 20px; margin-top: 20px;">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Crear rutina</h5>
+              <p class="card-text">Haga su propia rutina con los ejercicios seleccionados con sus respectivas series, repeticiones y descansos.</p>
+              <a data-toggle="modal" data-target="#modal-add-rutina" href="/home/administracion_rutinas/add_rutina" class="btn btn-primary">Ir</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Modificar una rutina</h5>
+              <p class="card-text">Seleccione una de las rutinas creadas para modificar uno o varios ejercicios.</p>
+              <a data-toggle="modal" data-target="#modal-modify-rutina" href="/home/administracion_rutinas/modify_rutina" class="btn btn-primary">Ir</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {%endblock%}

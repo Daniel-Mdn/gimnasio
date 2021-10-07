@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> Aplicacion </title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ url_for('static', filename= 'css/style_index.css')}}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  </head>
+  <body>
+    <form action="/home" method="POST">
+      <div class="wrapper fadeInDown">
+        <div id="formContent">
+          <!-- Tabs Titles -->
+      
+          <!-- Icon -->
+          <div class="fadeIn first">
+            <img src="{{ url_for('static', filename= 'img/logo.png')}}" alt="User Icon" width="100" height="100" class="" id="" />
+          </div>
+      
+          <!-- Login Form -->
+          <form>
+            <input type="text" id="id-user" class="fadeIn second" name="usuario" placeholder="Usuario">
+            <input type="password" id="id-password" class="fadeIn third" name="contrasenia" placeholder="Contraseña">
+            <input type="submit" class="button" value="Iniciar Sesion" >
+          </form>
+      
+          <!-- Remind Passowrd ¿-->
+          <div id="formFooter">
+            <a class="underlineHover" href="register">No esta registrado?</a>
+          </div>
+      
+        </div>
+      </div>
+    </form>
+    <script src="https://unpkg.com/ionicons@5.5.1/dist/ionicons.js"></script>    
+  </body>
+
+</html>

@@ -1,0 +1,95 @@
+{%extends "layout.html"%}
+
+  {%block head%}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="{{ url_for('static', filename= 'css/scroll.css')}}" rel="stylesheet">
+  {%endblock%}
+  {%block body%}
+
+    <div class="container">
+      <div>
+        <h1>{{rutina}}</h1>
+      </div>
+      <div class="container row" style="margin-top: 20px;">
+        <div class="col-md-4">
+          <div id="list-example" class="list-group ">
+            {% for ej in ejercicios%}
+            <a id="id-ejer-scroll" class="list-group-item list-group-item-action" href="#{{ej.1}}" onclick="seleccionar({{ej.1}});">{{ej.1}}</a>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy" style="height: 200px;overflow-y: scroll;">
+            {%for ej in ejercicios%}
+            <h4 id="{{ej.1}}">{{ej.1}}</h4>
+            <p>{{ej.2}}</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-inline" style="margin-top: 20px;">
+        <label class="form-label mb-2 mr-sm-2" id="id-ejer" aria-disabled="true"> Seleccione un ejercicio</label>
+        <button type="button" class="btn btn-primary mb-2 mr-sm-2" onclick="agregarFila()" id="id-botonAdd" disabled> Agregar </button>
+        <button type="button" class="btn btn-primary mb-2 mr-sm-2" onclick="eliminarFila()" id="id-botonDelete"> Eliminar ejercicio </button>
+      </div>
+      <form action="/home/administracion_rutinas/add_rutina/create_rutina" method="POST">
+        <table class="table table-striped" id="id-tabla" name="tabla">
+          <thead>
+            <tr>
+              <th scope="col">Orden</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Series</th>
+              <th scope="col">Repeticiones</th>
+              <th scope="col">Peso</th>
+              <th scope="col">Descansos</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="row">
+          <div class="col">
+            <button type="submit" class="btn btn-primary" id="id-botonSubmit"> Guardar rutina </button>
+          </div>
+          <div class="col">
+            <button type="submit" class="btn btn-primary" id="id-botonCancel"> Cancelar creacion rutina </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+  <script>
+
+    function seleccionar(elemento){
+      document.getElementById("id-ejer").innerHTML = elemento.innerHTML;
+      document.getElementById("id-botonAdd").disabled=false;
+    }
+
+    function validaNumericos(event){
+      if(event.charCode >= 48 && event.charCode <= 57){
+        return true;
+      }
+      return false;
+    }
+
+    function agregarFila(){
+      var table = document.getElementById("id-tabla");
+      var rowCount = table.rows.length;
+    
+      var ejercicioHTML=document.getElementById("id-ejer");
+      document.getElementById("id-tabla").insertRow(-1).innerHTML = '<td><input type="hidden" name="orden" value="' + rowCount +'">'+ rowCount +'</td><td><input type="hidden" name="nombre-ejer" value="' + ejercicioHTML.innerHTML +'">'+ ejercicioHTML.innerHTML + '</td><td><input type="text" onkeypress="return validaNumericos(event)" required name="series"></td><td><input type="text" onkeypress="return validaNumericos(event)" required name="repeticiones"></td><td><input type="text" onkeypress="return validaNumericos(event)" required name="peso"></td><td><input type="text" onkeypress="return validaNumericos(event)" required name="descansos"></td>';
+    }
+
+    function eliminarFila(){
+    var table = document.getElementById("id-tabla");
+    var rowCount = table.rows.length;
+    //console.log(rowCount);
+    
+    if(rowCount <= 1)
+      alert('No se puede eliminar el encabezado');
+    else
+      table.deleteRow(rowCount -1);
+    }
+  </script>
+  {%endblock%}
