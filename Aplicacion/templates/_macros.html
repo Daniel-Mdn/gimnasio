@@ -1,0 +1,60 @@
+{% macro render_field(field) %}
+  {{ field.label }}
+  <dd>{{ field(**kwargs)|safe }}
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  </dd>
+{% endmacro %}
+
+{% macro render_radiofield(field) %}
+  {{ field.label }}
+  <table>
+    <tr>
+    {% for subfield in field %}
+      <td>
+        {{ subfield(onclick='radioClick();')}}
+        {{ subfield.label }}
+      </td>
+    {% endfor %}
+    </tr>
+  </table>
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  </dd>
+{% endmacro %}
+
+{% macro render_datefield(field) %}
+  {{ field.label }}
+  {{ field(**kwargs)|safe}}
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  </dd>
+{% endmacro %}
+
+{% macro render_integerfield(field, placeholder) %}
+  {{ field.label }}
+  {{ field(**kwargs)|safe}}
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  </dd>
+{% endmacro %}

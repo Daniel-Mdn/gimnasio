@@ -1,0 +1,80 @@
+
+{%extends "layout.html"%}
+  {%block head%}
+  <!--<link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/ionicons@5.5.1/dist/ionicons.js"></script>-->
+  {%endblock%}
+
+  {%block body%}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages%}
+        {%if success %}
+        <div class="alert alert-success" role="alert">
+        {{message}}
+        </div>
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %} 
+    <div class="container">
+      <div class="row align-items-center">
+          <div class="col">
+              <img src="{{ url_for('static', filename= 'img/icono_persona.jpg')}}" class="img-fluid" alt="..." width="200" height="200">
+          </div>
+          <div class="col">
+            <h2>{{usuario.1}} {{usuario.2}}</h2>
+          </div>
+      </div>
+      <div class="container">
+
+        <div class="row">
+            <label><strong>Usuario: </strong> {{usuario.0}}</label>
+        </div>
+        <div class="row">
+          <label><strong>Mail: </strong> {{usuario.3}}</label>
+        </div>
+        <div class="row">
+          <label><strong>Sexo: </strong> {{usuario.5}}</label>
+        </div>
+        <div class="row">
+          <label><strong>Fecha de nacimiento: </strong> {{usuario.6}}</label>
+        </div>
+        <div class="row">
+          <label><strong>Peso: </strong> {{usuario.8}}</label>
+        </div>
+        <div class="row">
+          <label><strong>Estatura: </strong> {{usuario.7}}</label>
+        </div>
+        <div class="row">
+          <label><strong>Cintura: </strong> {{usuario.9}}</label>
+        </div>
+        <div class="row">
+          <label><strong>Cuello: </strong> {{usuario.10}}</label>
+        </div>
+        {% if usuario.5=="Femenino"%}
+          <div class="row">
+            <label><strong> Caderas: </strong> {{usuario.11}}</label>
+          </div>
+        {% endif %}
+        <div class="row">
+            <label name="imc" class="sr-2"><strong>IMC: </strong>{{imc}} {{evaluacion}}</label>
+        </div>
+        <div class="row">
+          <label name="porcentaje_grasa" class="sr-2"><strong>Porcentaje de grasa: </strong> {{pg}}%</label>
+        </div>
+        <div class="row">
+          <label name="m_basal" class="sr-2"><strong>Metabolismo basal: </strong>{{m_basal}} cal/dia</label>
+      </div>
+        <div class="row">
+          <a role="button" href="/home/user/actualize" class="btn btn-primary mt-2">Actualizar datos</a>
+        </div>
+      </div>
+    </div>
+  
+  {%endblock%}

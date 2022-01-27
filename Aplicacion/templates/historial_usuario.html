@@ -1,0 +1,47 @@
+{%extends "layout.html"%}
+
+  {%block head%}
+    <!--<link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/ionicons@5.5.1/dist/ionicons.js"></script>-->
+    {%endblock%}
+    {%block body%}
+      <div>
+        {{success}}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages%}
+            <div class="alert alert-primary text-center" role="alert">
+              {{message}}
+            </div>
+          {% endfor %}
+        {% endif %}
+        {% endwith %} 
+        <div class="container">
+            <div id="id-titulo" class="text-center">
+                <h2> {{nombre}} {{apellido}}</h2>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">IMC</th>
+                    <th scope="col">Metabolismo Basal (Calorías)</th>
+                    <th scope="col">Porcentaje de grasa</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for h in historial %}
+                    <tr>
+                      {{h}}
+                        <th scope="row">{{h.3.strftime('%d-%m-%Y')}}</th>
+                        <td>{{h.0}}</td>
+                        <td>{{h.1}}</td>
+                        <td>{{h.2}} % </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+      </div>
+{%endblock%}

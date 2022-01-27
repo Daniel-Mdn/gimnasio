@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages%}
+                <p> {{message}} </p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicacion</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5">
+        <form action="/ejercicios_add" method="POST">
+
+            <div class="form-group">
+                <label for="InputUser" class="form-label">Nombre ejercicio</label>
+                <input type="text" class="form-control" id="id-user" name="nombre-ejercicio" placeholder="Nombre ejercicio" required>
+            </div>
+
+            <div class="form-group" style="margin-top: 20px;">
+                <label for="id-descripcion" class="form-label">Descripcion</label>
+                <textarea class="form-control" id="id-descripcion" name="descripcion" rows="3"></textarea>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <button type="submit" class="btn btn-primary">Registrar Ejercicio</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> Aplicacion </title>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="static/js/jquery-3.6.0.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  <link rel="stylesheet" href="static/css/bootstrap-datepicker.standalone.css">  
+    <link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+  </head>
+  <body onload="picker();">
+    <div class="container">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages%}
+          <div class="alert alert-danger text-center" role="alert">
+            {{message}}
+          </div>
+        {% endfor %}
+      {% endif %}
+      {% endwith %} 
+      {% from '_macros.html' import render_field, render_radiofield, render_datefield %}
+      <div class="container mt-5">
+        <form action="/register" method="POST">
+          {{render_field(form.usuario, class='form-control') }}
+          <div class="row">
+            <div class="col-md-6">
+              {{render_field(form.nombre, class='form-control') }}
+            </div>
+            <div class="col-md-6">
+              {{render_field(form.apellido, class='form-control') }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                {{render_datefield(form.fechaNacimiento, id='datepicker', class='form-control', value=' ')}}
+              </div>
+            </div>
+            <div class="col-md-6">
+              {{render_radiofield(form.sexo)}}
+            </div>
+          </div>
+          <dd>
+            <label for="mail">Mail</label>
+            <input class="form-control" id="mail" name="mail" type="email" value="">
+          </dd>
+          {{render_field(form.contrasenia, class='form-control') }}
+          {{render_field(form.confirmarContra, class='form-control') }}
+          <div class="row">
+            <div class="col-md-6">
+              {{render_field(form.altura, class='form-control')}}
+            </div>
+            <div class="col-md-6">
+              {{render_field(form.peso, class='form-control')}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              {{render_field(form.cintura, class='form-control')}}
+            </div>
+            <div class="col-md-4">
+              {{render_field(form.cuello, class='form-control')}}
+            </div>
+            <div class="col-md-4">
+              {{render_field(form.caderas, class='form-control')}}
+            </div>
+          </div>
+          {{render_field(form.terminos) }}
+  
+          <div class="row" style="margin-top: 20px;">
+            <div class="col-auto">
+              <button type="submit" class="btn btn-primary">Registrarse</button>
+            </div>
+            <div class="col-auto">
+              <a href="http://localhost:3000" role="button" class="btn btn-primary">Volver</a>
+            </div>
+          </div>
+  
+        </form>
+      </div>
+    </div>
+
+
+    <script>
+      function picker() {
+
+      $('#datepicker').datepicker({
+        language: "es",
+        todayBtn: "linked",
+        clearBtn: true,
+        format: "yyyy-mm-dd",
+        multidate: false,
+        todayHighlight: true,
+        autoclose: true
+      });
+
+      }
+      function radioClick(){
+        var input=document.getElementById("caderas");
+        var radio=document.getElementById("sexo-1");
+
+
+      }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="static/js/bootstrap-datepicker.min.js"></script>
+    <script src="static/locales/bootstrap-datepicker.es.min.js"></script>
+  </body>
+</html>

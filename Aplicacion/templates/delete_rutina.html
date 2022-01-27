@@ -1,0 +1,122 @@
+{%extends "layout.html"%}
+
+{%block head%}
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link href="{{ url_for('static', filename= 'css/scroll.css')}}" rel="stylesheet">
+{%endblock%}
+{%block body%}
+
+<div class="container">
+  <div class="mb-2">
+    <div class="dropdown mt-2">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Seleccione una rutina
+      </button>
+        <div class="dropdown-menu">
+          {% for rut in rutinas%}
+          <a class="dropdown-item" id="rutina{{rut.0}}" onclick="cargarRutina({{rut.0| tojson}});"> {{rut.1}} </a>
+          {% endfor %}
+      </div>
+    </div>
+  </div>
+      <form action="/home/administracion_rutinas/delete_rutina/confirm_delete" method="POST">
+        <div class="input-group input-group-lg mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-lg">Rutina</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-lg" id="nombre-rut" name="nomb-rut" disabled>
+        </div>
+        <input id="id-rut" name="numb-rut" hidden >
+        <table class="table table-striped" id="id-tabla" name="tabla">
+          <thead>
+            <tr>
+              <th scope="col">Orden</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Series</th>
+              <th scope="col">Repeticiones</th>
+              <th scope="col">Peso</th>
+              <th scope="col">Descansos</th>
+            </tr>
+          </thead>
+          <tbody id="id-body"></tbody>
+        </table>
+        <div class="row">
+          <div class="col">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalSubmit" id="id-botonCambios" disabled> Guardar cambios </button>
+          </div>
+          <div class="col">
+            <button type="submit" class="btn btn-primary">
+              Volver
+            </button>
+          <div class="modal fade" id="modalSubmit" tabindex="-1" role="dialog" aria-labelledby="modalSubmitLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalSubmitLabel">Confirmar</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Esta seguro que desea eliminarla?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="submit" class="btn btn-primary" name="botonSubmit" id="id-botonSubmit" value="botonSubmit">Aceptar</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    
+</div>
+    <script>
+        function seleccionar(elemento){
+          document.getElementById("id-ejer").innerHTML = document.getElementById(elemento).innerHTML;
+          document.getElementById("id-botonAdd").disabled=false;
+        }
+        function validaNumericos(event){
+          if(event.charCode >= 48 && event.charCode <= 57){
+            return true;
+          }
+          return false;
+        }
+    
+        var contador=0;
+    
+        function cargarRutina(rut){
+          var cuerpoTabla=document.getElementById("id-body");
+          cuerpoTabla.innerHTML="";
+          var j=0;
+          var rutinasEjer= {{rutinaEjer|tojson}};
+          var nombreRut= document.getElementById("nombre-rut");
+          var idRut= document.getElementById("id-rut");
+          var rutinas= {{rutinas|tojson}};
+          var btnCambios= document.getElementById("id-botonCambios");
+          btnCambios.disabled=false;
+
+          for (let i = 0; i < rutinas.length; i++) {
+            if (rut == rutinas[i][0]){
+              nombreRut.value= rutinas[i][1];
+              idRut.value = rutinas[i][0];
+            }
+          }
+          rutinasEjer.forEach(ej => {
+            if (ej[0]==rut){
+              var table = document.getElementById("id-tabla");
+              var rowCount = table.rows.length;
+              var row= document.getElementById("id-body").insertRow(-1);
+              row.id='fila' + contador;
+              var fila= '<td class="orden" ><input type="hidden" name="orden" value="'+ rowCount +'">'+ rowCount +'</td><td><input type="hidden" name="nombre-ejer" value="' +  ej[2] +'">'+ ej[2] +'</td><td><input value="'+ ej[5]+'" type="hidden" onkeypress="return validaNumericos(event)" required name="series">'+ej[5]+'</td><td><input value="'+ ej[4]+'" type="hidden" onkeypress="return validaNumericos(event)" required name="repeticiones">'+ ej[4]+'</td><td><input value="'+ ej[3]+'" type="hidden" onkeypress="return validaNumericos(event)" required name="peso">'+ ej[3]+'</td><td><input value="'+ ej[6]+'" type="hidden" onkeypress="return validaNumericos(event)" required name="descansos">'+ ej[6]+'</td>'
+              row.innerHTML= fila; 
+    
+              } 
+          });
+    
+         contador= contador + 1;
+        }
+    
+      </script>
+  {%endblock%}

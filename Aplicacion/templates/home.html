@@ -1,0 +1,106 @@
+
+  {%extends "layout.html"%}
+
+  {%block head%}
+    <!--<link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/ionicons@5.5.1/dist/ionicons.js"></script>-->
+    {%endblock%}
+    {%block body%}
+      <div>
+        {{success}}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages%}
+            <div class="alert alert-success text-center" role="alert">
+              {{message}}
+            </div>
+          {% endfor %}
+        {% endif %}
+        {% endwith %} 
+        <div class="container" style="margin-top: 20px;">
+          <div class="row" style="margin-bottom: 20px;">
+            <form action="/home" method="get">
+              <div class="dropdown">
+                <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button" id="dropdownRutina" aria-haspopup="true" aria-expanded="false">
+                  Rutina
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownRutina">
+                  {% if datosRutinas %}
+                    {% for rut in datosRutinas %}
+                      <a class="dropdown-item" id="rutina{{rut.0}}" onclick="seleccionar({{rut.0| tojson}});"> {{rut.1}}</a>
+                    {% endfor %}
+                    <input id="id-rutina" name=rutina value="1" hidden>
+                    <input type="submit" id="id-boton" hidden></button>
+                  {% else %}
+                    <a class="dropdown-item">No tiene rutinas</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </form>
+          {% if rutina!=None%}
+              <form action="/home" method="POST">
+                <div id="id-titulo" class="text-center">
+                  <h2>Rutina: {{rutina}} - {{calorias}} Calorías</h2>
+                  <input name="rutina" value="{{rutina}}" hidden>
+                </div>
+                {% for ej in ejercicios %}
+                <div id="id-form" class="form-group">
+                  <div id="id-ejercicio" class="row justify-content-center">
+                    <h4 >{{ej.1}}</h4>
+                  </div>
+                  <div id="id-info" class="row justify-content-center">
+                    <p><strong>Peso: </strong>{{ej.2}} Kg. &nbsp;<strong>Repeticiones: </strong> {{ej.3}} &nbsp;<strong> Series: </strong>{{ej.4}} <strong> &nbsp;Descanso: </strong>{{ej.5}} Segundos</p>
+                  </div>
+                  <div class="row justify-content-center">
+                    <div class="col-1 text-center">
+                      <h5 >Series</h5>
+                      {% for i in range(0, ej.4)%}
+                        <input name="ejercicio" value="{{ej.0}}" hidden>
+                        <h4 style="margin-bottom: 22px;">{{i + 1}}</h4>
+                      {% endfor %}
+                    </div>
+                    <div class="col-2 text-center">
+                      <h5 >Peso</h5>
+                      {% for i in range(0, ej.4)%}
+                      <input name="pesos" type="text" class="form-control" style="margin-bottom: 10px;">
+                      {% endfor %}
+                    </div>
+                    <div class="col-2 text-center">
+                      <h5 >Repeticiones</h5>
+                      {% for i in range(0, ej.4)%}
+                        <input name="repeticiones" type="text" class="form-control" style="margin-bottom: 10px;">
+                      {% endfor %}
+                    </div>
+                    <div class="col-2 text-center">
+                      <h5 >Descansos</h5>
+                      {% for i in range(0, ej.4)%}
+                        <input name="descansos" type="text" class="form-control" style="margin-bottom: 10px;">
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+                <div class="container" style="margin-top: 20px;">
+                  <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" name="boton" value="Terminar Rutina" {% if rutina==None %}hidden{% endif %}>Terminar Rutina</button>
+                  </div>
+                </div>
+              </div>
+              </form>
+          {% endif %}
+        </div>
+  
+
+      
+      <link href="{{ url_for('static', filename= 'js/fuctions.js')}}" rel="stylesheet">
+
+      <script>
+        function seleccionar(rut){
+          document.getElementById("id-rutina").value= rut;
+          document.getElementById("id-boton").click();
+        }
+      </script>
+    {%endblock%}
+

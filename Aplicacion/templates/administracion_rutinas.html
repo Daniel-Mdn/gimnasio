@@ -1,0 +1,51 @@
+{%extends "layout.html"%}
+
+  {%block head%}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  {%endblock%}
+  {%block body%}
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages%}
+          <div class="alert alert-success" role="alert">
+            {{message}}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %} 
+
+    <div class="container">
+      <div class="row" style="margin-bottom: 20px; margin-top: 20px;">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Crear rutina</h5>
+              <p class="card-text">Haga su propia rutina con los ejercicios seleccionados con sus respectivas series, repeticiones y descansos.</p>
+              <a data-toggle="modal" data-target="#id-modal-add-rutina" href="/home/administracion_rutinas/add_rutina" class="btn btn-primary">Ir</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Modificar una rutina</h5>
+              <p class="card-text mb-4">Seleccione una de las rutinas creadas para modificar uno o varios ejercicios.</p>
+              <a href="/home/administracion_rutinas/modify_rutina" class="btn btn-primary">Ir</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Eliminar una rutina</h5>
+              <p class="card-text mb-5">Seleccione y elimine una de sus rutinas</p>
+              <a href="/home/administracion_rutinas/delete_rutina" class="btn btn-primary">Ir</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {%endblock%}

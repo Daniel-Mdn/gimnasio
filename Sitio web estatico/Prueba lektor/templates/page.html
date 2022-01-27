@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}{{ this.title }}{% endblock %}
+{% block body %}
+  <div class="text-center">
+    <h2>{{ this.title }}</h2>
+    {% set image = this.attachments.images.first() %}
+    {% if image %}
+    <img src="{{image|url}}" height=400 alt="Imagen ilustrativa">
+    {% endif %}
+    {% if this.body!="" %}
+    <p>{{this.body}}</p>
+    {% endif %}
+  </div>
+
+{% endblock %}

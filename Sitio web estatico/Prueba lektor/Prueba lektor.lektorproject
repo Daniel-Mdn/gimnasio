@@ -1,0 +1,12 @@
+[project]
+name = Prueba lektor
+
+[packages]
+imagetools = 1.0.0
+
+
+[servers.ghpages]
+enabled = yes
+default = yes 
+target = ghpages+https://Juandiegordp/juandiegordp.github.io
+juandiegordp:Bolivar1063@

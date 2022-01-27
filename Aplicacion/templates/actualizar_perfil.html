@@ -1,0 +1,39 @@
+{%extends "layout.html"%}
+{%block head%}
+<!--<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/ionicons@5.5.1/dist/ionicons.js"></script>-->
+{%endblock%}
+{%block body%}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages%}
+        {%if success %}
+        <div class="alert alert-success" role="alert">
+        {{message}}
+        </div>
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %} 
+    {% from '_macros.html' import render_integerfield, render_field, render_radiofield, render_datefield %}
+    <div class="container">
+        <form action="/home/user/actualize" method="POST">
+            {{render_field(form.altura, class="form-control", placeholder=datos[1])}}
+            {{render_field(form.peso, class="form-control", placeholder=datos[2])}}
+            {{render_field(form.cintura, class="form-control", placeholder=datos[3])}} 
+            {{render_field(form.cuello, class="form-control", placeholder=datos[4])}}
+            {% if datos[0]=="Femenino"%}
+                {{render_field(form.caderas, class="form-control", value=datos[5])}}         
+            {% else %}
+                <input name="caderas" value="{{datos[5]}}" type="hidden">
+            {% endif %}
+            <button type="button" class="btn btn-primary" value="volver">Volver</button>
+            <button type="submit" class="btn btn-primary" value="actualizar">Actualizar</button>
+        </form>
+    </div>
+{%endblock%}

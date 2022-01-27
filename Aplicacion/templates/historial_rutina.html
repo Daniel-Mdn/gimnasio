@@ -1,0 +1,83 @@
+{%extends "layout.html"%}
+
+  {%block head%}
+    <!--<link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/ionicons@5.5.1/dist/ionicons.js"></script>-->
+    {%endblock%}
+    {%block body%}
+      <div>
+        {{success}}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages%}
+            <div class="alert alert-primary text-center" role="alert">
+              {{message}}
+            </div>
+          {% endfor %}
+        {% endif %}
+        {% endwith %} 
+        <div class="container" style="margin-top: 20px;">
+          <div class="row" style="margin-bottom: 20px;">
+            <form action="/home/historial_rutina" method="get">
+              <div class="dropdown">
+                <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button" id="dropdownRutina" aria-haspopup="true" aria-expanded="false">
+                  Rutina
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownRutina">
+                  {% if datosRutinas %}
+                    {% for rut in datosRutinas %}
+                      <a class="dropdown-item" id="rutina{{rut.0}}" onclick="seleccionar({{rut.0| tojson}});"> {{rut.1}}</a>
+                    {% endfor %}
+                    <input id="id-rutina" name=rutina value="1" hidden>
+                    <input type="submit" id="id-boton" hidden></button>
+                  {% else %}
+                    <a class="dropdown-item">No tiene rutinas</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            </form>
+          {% if rutina!=None%}
+          <div class="container">
+            <div id="id-titulo" class="text-center">
+                <h2>Rutina: {{rutina}}</h2>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Ejercicio</th>
+                    <th scope="col">Peso (Kg)</th>
+                    <th scope="col">Repeticiones</th>
+                    <th scope="col">Descanso (seg)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for ej in ejercicios %}
+                    <tr>
+                        <th scope="row">{{ej.0.strftime('%d-%m-%Y')}}</th>
+                        <td>{{ej.2}}</td>
+                        <td>{{ej.3}}</td>
+                        <td>{{ej.4}}</td>
+                        <td>{{ej.5}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+              {% endif %}
+          </div>
+        </div>
+  
+
+      
+      <link href="{{ url_for('static', filename= 'js/fuctions.js')}}" rel="stylesheet">
+
+      <script>
+        function seleccionar(rut){
+          document.getElementById("id-rutina").value= rut;
+          document.getElementById("id-boton").click();
+        }
+      </script>
+    {%endblock%}
+

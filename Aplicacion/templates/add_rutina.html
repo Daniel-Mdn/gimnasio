@@ -1,0 +1,102 @@
+{%extends "layout.html"%}
+
+  {%block head%}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="{{ url_for('static', filename= 'css/scroll.css')}}" rel="stylesheet">
+  {%endblock%}
+  {%block body%}
+
+    <div class="container">
+      <div>
+        <h1>{{rutina}}</h1>
+      </div>
+      <div class="container row" style="margin-top: 20px;">
+        <div class="col-md-4">
+          <div id="list-example" class="list-group " style="height: 400px;overflow-y: scroll;">
+            {% for ej in ejercicios%}
+            <a id="id-ejer-scroll" class="list-group-item list-group-item-action" href="#{{ej.1}}" onclick="seleccionar({{ej.0}});">{{ej.1}}</a>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy" style="height: 400px;overflow-y: scroll;">
+            {%for ej in ejercicios%}
+            <h4 id="{{ej.0}}">{{ej.1}}</h4>
+            <p>{{ej.2}}</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-inline" style="margin-top: 20px;">
+        <label class="form-label mb-2 mr-sm-2" id="id-ejer" aria-disabled="true"> Seleccione un ejercicio</label>
+        <button type="button" class="btn btn-primary mb-2 mr-sm-2" onclick="agregarFila()" id="id-botonAdd" disabled> Agregar </button>
+      </div>
+      <form action="/home/administracion_rutinas/add_rutina/create_rutina" method="POST">
+        <table class="table table-striped" id="id-tabla" name="tabla">
+          <thead>
+            <tr>
+              <th scope="col">Orden</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Series</th>
+              <th scope="col">Repeticiones</th>
+              <th scope="col">Peso</th>
+              <th scope="col">Descansos</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody id="id-body"></tbody>
+        </table>
+        <div class="row">
+          <div class="col">
+            <button type="submit" class="btn btn-primary" name="botonSubmit" id="id-botonSubmit" value="botonSubmit"> Guardar rutina </button>
+          </div>
+          <div class="col">
+            <button type="submit" class="btn btn-primary" name="botonCancel" id="id-botonCancel" value="botonCancel"> Cancelar creacion rutina </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+  <script>
+
+    function seleccionar(elemento){
+      document.getElementById("id-ejer").innerHTML = document.getElementById(elemento).innerHTML;
+      document.getElementById("id-botonAdd").disabled=false;
+    }
+
+    function validaNumericos(event){
+      if(event.charCode >= 48 && event.charCode <= 57){
+        return true;
+      }
+      return false;
+    }
+    var contador=0;
+    function agregarFila(){
+
+      var table = document.getElementById("id-tabla");
+      var rowCount = table.rows.length;
+      var ejercicioHTML=document.getElementById("id-ejer");
+      var fila= '<td class="orden" ><input type="hidden" name="orden" value="'+ rowCount +'">'+ rowCount +'</td><td><input type="hidden" name="nombre-ejer" value="' + ejercicioHTML.innerHTML +'">'+ ejercicioHTML.innerHTML +'</td><td><input class="w-100 " type="text" onkeypress="return validaNumericos(event)" required name="series"></td><td class=""><input class="w-100 " type="text" onkeypress="return validaNumericos(event)" required name="repeticiones"></td><td><input class="w-100  " type="text" onkeypress="return validaNumericos(event)" required name="peso"></td><td><input class="w-100 " type="text" onkeypress="return validaNumericos(event)" required name="descansos"></td><td><input class="btn btn-outline-danger" type="button" onclick="eliminarFilaPrueba('+ (contador) +');" value="Eliminar" /></td>'
+      
+      var row= document.getElementById("id-body").insertRow(-1);
+      row.id='fila' + contador;
+      row.innerHTML= fila;
+      contador= contador + 1;
+    };
+
+    function eliminarFilaPrueba(index){
+      $("#fila" + index).remove();
+      var body= document.getElementById("id-body");
+      let rows = body.querySelectorAll('tr');
+      var i= 0;
+      rows.forEach(row => {
+        i=i+1;
+        var orden= row.getElementsByClassName("orden").item(0);
+        orden.innerHTML= '<input type="hidden" name="orden" value="'+ i +'">'+ i +'</td>';
+      });
+    }
+
+  </script>
+  {%endblock%}
